@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAPENDA Riau - Sistem Administrasi Pajak dan Retribusi Daerah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #2c5f2d, #4a8f4e);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo-subtext {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lapor-btn {
+            background: #ffd700;
+            color: #2c5f2d;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lapor-btn:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 0;
+            border-bottom: 3px solid #4a8f4e;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #4a8f4e;
+        }
+
+        .dropdown-arrow {
+            font-size: 0.8rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-item:hover a {
+            color: #4a8f4e;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 95, 45, 0.7), rgba(74, 143, 78, 0.7)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23a8e6a3" width="1200" height="600"/><circle fill="%23ffffff" opacity="0.1" cx="200" cy="150" r="80"/><circle fill="%23ffffff" opacity="0.1" cx="800" cy="300" r="120"/><circle fill="%23ffffff" opacity="0.1" cx="1000" cy="100" r="60"/></svg>');
+            background-size: cover;
+            background-position: center;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(44, 95, 45, 0.8), rgba(74, 143, 78, 0.6));
+            z-index: 1;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: #ffd700;
+            color: #2c5f2d;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #2c5f2d;
+        }
+
+        .hero-officials {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .official-card {
+            background: rgba(255, 255, 255, 0.1);
+
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .official-image {
+            width: 200px;
+            height: 250px;
+            background: linear-gradient(135deg, #4a8f4e, #6ba16f);
+            border-radius: 15px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .official-name {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .official-title {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c5f2d;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4a8f4e, #6ba16f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            color: #666;
+        }
+
+        /* Samsat Services Section */
+        .samsat-services {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .samsat-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .samsat-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c5f2d;
+            margin-bottom: 3rem;
+        }
+
+        .samsat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .samsat-card {
+            background: #f8f9fa;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .samsat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 143, 78, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .samsat-card:hover::before {
+            left: 100%;
+        }
+
+        .samsat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(44, 95, 45, 0.15);
+            border-color: #4a8f4e;
+            background: white;
+        }
+
+        .samsat-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4a8f4e, #6ba16f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 10px 25px rgba(74, 143, 78, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .samsat-card:hover .samsat-icon {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(74, 143, 78, 0.4);
+        }
+
+        .samsat-card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+
+        .samsat-card-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .samsat-btn {
+            background: linear-gradient(135deg, #4a8f4e, #6ba16f);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .samsat-btn:hover {
+            background: linear-gradient(135deg, #6ba16f, #4a8f4e);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(74, 143, 78, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div>
+                    <div class="logo-text">BAPENDA</div>
+                    <div class="logo-subtext">Riau</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="lapor-btn">📋 LAPOR</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Profil <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">Visi & Misi</a></div>
+                        <div class="dropdown-item"><a href="#">Struktur Organisasi</a></div>
+                        <div class="dropdown-item"><a href="#">Sejarah</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Pajak dan Retribusi <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">Pajak Daerah</a></div>
+                        <div class="dropdown-item"><a href="#">Retribusi Daerah</a></div>
+                        <div class="dropdown-item"><a href="#">Tarif & Regulasi</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Layanan Samsat <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">Samsat Online</a></div>
+                        <div class="dropdown-item"><a href="#">Lokasi Samsat</a></div>
+                        <div class="dropdown-item"><a href="#">Jadwal Pelayanan</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        UPT/UP <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">UPT Wilayah I</a></div>
+                        <div class="dropdown-item"><a href="#">UPT Wilayah II</a></div>
+                        <div class="dropdown-item"><a href="#">UP Kabupaten/Kota</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Berita <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">Berita Terbaru</a></div>
+                        <div class="dropdown-item"><a href="#">Pengumuman</a></div>
+                        <div class="dropdown-item"><a href="#">Event</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Data <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">Statistik Pajak</a></div>
+                        <div class="dropdown-item"><a href="#">Laporan Keuangan</a></div>
+                        <div class="dropdown-item"><a href="#">Data Terbuka</a></div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">PPID</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Information Center <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item"><a href="#">FAQ</a></div>
+                        <div class="dropdown-item"><a href="#">Kontak</a></div>
+                        <div class="dropdown-item"><a href="#">Panduan</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Samsat Services Section -->
+    <section class="samsat-services">
+        <div class="samsat-container">
+            <h2 class="samsat-title">Layanan Samsat</h2>
+            <div class="samsat-grid">
+                <div class="samsat-card">
+                    <div class="samsat-icon">🚌</div>
+                    <h3 class="samsat-card-title">Samsat Keliling</h3>
+                    <p class="samsat-card-desc">Jadwal Samsat Keliling di Provinsi Riau.</p>
+                    <a href="#" class="samsat-btn">Lihat Jadwal</a>
+                </div>
+                <div class="samsat-card">
+                    <div class="samsat-icon">🚲</div>
+                    <h3 class="samsat-card-title">Samsat Tanjak</h3>
+                    <p class="samsat-card-desc">Jadwal Samsat Tanjak di Provinsi Riau.</p>
+                    <a href="#" class="samsat-btn">Lihat Jadwal</a>
+                </div>
+                <div class="samsat-card">
+                    <div class="samsat-icon">🏢</div>
+                    <h3 class="samsat-card-title">Samsat Drive Thru</h3>
+                    <p class="samsat-card-desc">Lokasi Samsat Drive Thru di Provinsi Riau.</p>
+                    <a href="#" class="samsat-btn">Lihat Lokasi</a>
+                </div>
+                <div class="samsat-card">
+                    <div class="samsat-icon">💻</div>
+                    <h3 class="samsat-card-title">Antrian Online</h3>
+                    <p class="samsat-card-desc">Layanan Antrian Online Untuk Pembayaran Pajak di Provinsi Riau.</p>
+                    <a href="#" class="samsat-btn">Ambil Antrian</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Add click handlers for buttons
+        document.querySelector('.lapor-btn').addEventListener('click', function() {
+            alert('Fitur Lapor akan diarahkan ke sistem pelaporan online');
+        });
+
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Fitur ini akan mengarahkan ke halaman terkait');
+            });
+        });
+
+
+        // Add click handlers for samsat service buttons
+        document.querySelectorAll('.samsat-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const cardTitle = this.closest('.samsat-card').querySelector('.samsat-card-title').textContent;
+                alert(`Fitur ${cardTitle} akan mengarahkan ke halaman layanan terkait`);
+            });
+        });
+    </script>
+</body>
+</html>
